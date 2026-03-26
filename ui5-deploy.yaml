@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: customer-zespri-ci-settleman-cc-managesupls1-variant
+type: application
+resources:
+  configuration:
+    propertiesFileSourceEncoding: UTF-8
+customConfiguration:
+  adp:
+    support:
+      id: '@sap/generator-fiori'
+      version: 1.20.4
+      toolsId: bdb80216-cbd5-4736-8818-30f05cb9baf0
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: https://vhzesp4dci.sap.zespri.com:44300/
+          client: '100'
+        app:
+          package: ZSD_GROWER_PAYMENTS_UI
+          transport: P4DK905413
+        exclude:
+          - /test/
+        lrep: apps/ci.settleman.cc.managesupls1/appVariants/customer.zespri.ci.settleman.cc.managesupls1.variant/

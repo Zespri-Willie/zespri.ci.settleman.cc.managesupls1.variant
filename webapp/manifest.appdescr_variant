@@ -1,0 +1,51 @@
+{
+  "fileName": "manifest",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "appdescr_variant",
+  "reference": "ci.settleman.cc.managesupls1",
+  "id": "customer.zespri.ci.settleman.cc.managesupls1.variant",
+  "namespace": "apps/ci.settleman.cc.managesupls1/appVariants/customer.zespri.ci.settleman.cc.managesupls1.variant/",
+  "version": "0.1.0",
+  "content": [
+    {
+      "changeType": "appdescr_ui5_addNewModelEnhanceWith",
+      "content": {
+        "modelId": "i18n"
+      },
+      "texts": {
+        "i18n": "i18n/i18n.properties"
+      }
+    },
+    {
+      "changeType": "appdescr_ui5_addNewModelEnhanceWith",
+      "content": {
+        "modelId": "@i18n"
+      },
+      "texts": {
+        "i18n": "i18n/i18n.properties"
+      }
+    },
+    {
+      "changeType": "appdescr_ui5_addNewModelEnhanceWith",
+      "content": {
+        "modelId": "i18n|sap.suite.ui.generic.template.AnalyticalListPage|C_MngSuplrCndnContr"
+      },
+      "texts": {
+        "i18n": "i18n/AnalyticalListPage/C_MngSuplrCndnContr/i18n.properties"
+      }
+    },
+    {
+      "changeType": "appdescr_ui5_setMinUI5Version",
+      "content": {
+        "minUI5Version": "1.120.38"
+      }
+    },
+    {
+      "changeType": "appdescr_app_setTitle",
+      "content": {},
+      "texts": {
+        "i18n": "i18n/i18n.properties"
+      }
+    }
+  ]
+}

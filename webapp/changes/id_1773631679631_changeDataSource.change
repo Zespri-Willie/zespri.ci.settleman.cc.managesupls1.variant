@@ -1,0 +1,23 @@
+{
+  "fileName": "id_1773631679631_changeDataSource",
+  "namespace": "apps/ci.settleman.cc.managesupls1/appVariants/customer.zespri.ci.settleman.cc.managesupls1.variant/changes",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "creation": "2026-03-16T03:27:59.631Z",
+  "packageName": "$TMP",
+  "reference": "customer.zespri.ci.settleman.cc.managesupls1.variant",
+  "support": {
+    "generator": "@sap-ux/adp-tooling"
+  },
+  "changeType": "appdescr_app_changeDataSource",
+  "content": {
+    "dataSourceId": "mainService",
+    "entityPropertyChange": [
+      {
+        "propertyPath": "uri",
+        "operation": "UPDATE",
+        "propertyValue": "/sap/opu/odata/sap/zsd_setman_ccsupl_man_ext_srv/"
+      }
+    ]
+  }
+}

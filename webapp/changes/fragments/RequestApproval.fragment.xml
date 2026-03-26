@@ -1,0 +1,14 @@
+<!-- Use stable and unique IDs!-->
+<core:FragmentDefinition xmlns:core='sap.ui.core' xmlns='sap.m'>
+    <!-- viewName: sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage -->
+    <!-- controlType: sap.m.OverflowToolbar -->
+    <!-- targetAggregation: content --> 
+    <!-- add your xml here -->
+    <Button 
+        text="Request Approval"
+        enabled="false"  
+        type="Transparent"
+        id="btnZZRequestApproval"
+        press=".extension.customer.zespri.ci.settleman.cc.managesupls1.variant.zzController.onRequestApproval">
+    </Button>
+</core:FragmentDefinition>

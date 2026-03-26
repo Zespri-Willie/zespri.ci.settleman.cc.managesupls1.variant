@@ -1,0 +1,23 @@
+{
+  "changeType": "codeExt",
+  "reference": "customer.zespri.ci.settleman.cc.managesupls1.variant",
+  "namespace": "apps/customer.zespri.ci.settleman.cc.managesupls1.variant/changes/",
+  "creation": "2026-03-16T02:18:30.497Z",
+  "projectId": "customer.zespri.ci.settleman.cc.managesupls1.variant",
+  "moduleName": "customer/zespri/ci/settleman/cc/managesupls1/variant/changes/coding/zzController",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "sapui5Version": "1.120.38"
+  },
+  "originalLanguage": "EN",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "fileName": "id_1773627481187_486_codeExt",
+  "content": {
+    "codeRef": "coding/zzController.js"
+  },
+  "texts": {},
+  "selector": {
+    "controllerName": "sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage"
+  }
+}

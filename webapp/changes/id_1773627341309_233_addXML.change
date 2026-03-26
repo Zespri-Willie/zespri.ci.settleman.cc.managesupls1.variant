@@ -1,0 +1,33 @@
+{
+  "changeType": "addXML",
+  "reference": "customer.zespri.ci.settleman.cc.managesupls1.variant",
+  "namespace": "apps/customer.zespri.ci.settleman.cc.managesupls1.variant/changes/",
+  "creation": "2026-03-16T02:15:44.476Z",
+  "projectId": "customer.zespri.ci.settleman.cc.managesupls1.variant",
+  "packageName": "$TMP",
+  "moduleName": "customer/zespri/ci/settleman/cc/managesupls1/variant/changes/fragments/RequestSetAppr.fragment.xml",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "sapui5Version": "1.120.38",
+    "command": "addXML"
+  },
+  "originalLanguage": "EN",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "fileName": "id_1773627341309_233_addXML",
+  "content": {
+    "targetAggregation": "content",
+    "index": 5,
+    "fragmentPath": "fragments/RequestSetAppr.fragment.xml"
+  },
+  "texts": {
+    "value": "Request Settlement Approval",
+    "type": "XBUT"
+  },
+  "selector": {
+    "id": "ci.settleman.cc.managesupls1::sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage::C_MngSuplrCndnContr--template::TableToolbar",
+    "idIsLocal": false
+  },
+  "dependentSelector": {},
+  "jsOnly": false
+}
