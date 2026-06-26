@@ -27,7 +27,7 @@ builder:
           client: '100'
         app:
           package: ZSD_GROWER_PAYMENTS_UI
-          transport: P4DK905413
+          transport: P4DK908232
         exclude:
           - /test/
         lrep: apps/ci.settleman.cc.managesupls1/appVariants/customer.zespri.ci.settleman.cc.managesupls1.variant/

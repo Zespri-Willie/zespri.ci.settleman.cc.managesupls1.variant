@@ -72,10 +72,7 @@ sap.ui.define(
                     });
                     promise.then(function(result) {
                         if (result.length > 0 && result[0].response.data.Success) {
-                            //sap.m.MessageToast.show(t.base.getView().getModel("@i18n").getResourceBundle().getText("MSG_CC_RELEASED_SUCCESS") + "\n Contract Number: (" + u.ConditionContract + ")");
                             sap.m.MessageToast.show(sMessage + "\n Contract Number: " + payload.ConditionContract);
-                            //that.base.getView().getController().extensionAPI.refresh();
-                            //that.base.getView().getController().extensionAPI.rebindTable();
                             setTimeout(() => {
                                 //that.base.getView().getController().extensionAPI.rebindTable();
                                 that.base.getView().getController().extensionAPI.refresh();
@@ -108,11 +105,41 @@ sap.ui.define(
                     button.setEnabled(bEnable);
                 }
             },
-            
+
+            _setReleaseButtonEnabled: function(bEnable) {
+                this.getView().byId("BtnActivate").setEnabled(bEnable);
+            },
+
             _updateButtons: function(oEvent) {
                 this._setButtonsEnabled(false);
+                this._setReleaseButtonEnabled(false);
+
                 const selectedContexts = oEvent.getSource().getSelectedContexts();
                 this._setButtonsEnabled((selectedContexts.length > 0));
+
+                if (selectedContexts.length > 0) {
+                    this._getAuthorisedToRelease(selectedContexts[0]);
+                }
+            },
+
+            _getAuthorisedToRelease: function(selectedContext) {
+                const that = this;
+                console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: Get Authorised to Release"); 
+
+                const conditionContract = selectedContext.getProperty("ConditionContract");
+                const payload = {
+                    ConditionContract: conditionContract
+                };
+
+                const promise = that.base.getView().getController().extensionAPI.securedExecution(function() {
+                    return that.base.getView().getController().extensionAPI.invokeActions(
+                        "LO_SETMAN_CCSUPL_MAN.LO_SETMAN_CCSUPL_MAN_Entities/CndnContrAuthChckRelease", [], payload
+                    );
+                });
+
+                promise.then(function(result) {
+                    that._setReleaseButtonEnabled(result.length > 0 && result[0].response.data.Success);
+                });
             },
 
             override: {
