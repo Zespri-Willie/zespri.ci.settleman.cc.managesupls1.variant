@@ -44,15 +44,75 @@ sap.ui.define(
             // couldBePrivate: function() {},
             // // this section allows to extend lifecycle hooks or override public methods of the base controller
 
-            _buttons: [],
+            _setReleaseButtonEnabled: function(bEnable) {
+                this.getView().byId("BtnActivate").setEnabled(bEnable);
+            },
+
+            _setSettLockButtonEnabled: function(bEnable) {
+                this.getView().byId("BtnLock").setEnabled(bEnable);
+            },
+
+            _setReqApprButtonEnabled: function(bEnable) {
+                this.getView().byId(this.getView().getId() + 
+                    '--customer.zespri.ci.settleman.cc.managesupls1.variant.btnZZRequestApproval'
+                ).setEnabled(bEnable);
+            },
+
+            _setReqSettApprButtonEnabled: function(bEnable) {
+                this.getView().byId(this.getView().getId() +
+                    '--customer.zespri.ci.settleman.cc.managesupls1.variant.btnZZRequestSettlementApproval'
+                ).setEnabled(bEnable);
+            },
+            
+            _disableAllButtons: function() {
+                this._setReleaseButtonEnabled(false);
+                this._setSettLockButtonEnabled(false);
+                this._setReqApprButtonEnabled(false);
+                this._setReqSettApprButtonEnabled(false);
+            },
+
+            _updateAllButtons: function(oStatus) {
+                this._setReleaseButtonEnabled(oStatus.Release);
+                this._setSettLockButtonEnabled(oStatus.SettLock);
+                this._setReqApprButtonEnabled(oStatus.ReqAppr);
+                this._setReqSettApprButtonEnabled(oStatus.ReqSettAppr);
+            },
+
+            _selectionChangeEvent: function(oEvent) {
+                this._disableAllButtons();
+                const selectedContexts = oEvent.getSource().getSelectedContexts();
+                if (selectedContexts.length > 0) {
+                     this._getButtonEnablement(selectedContexts[0]);
+                }
+            },
+
+            _getButtonEnablement: function(selectedContext) {
+                const that = this;
+
+                const conditionContract = selectedContext.getProperty("ConditionContract");
+                const payload = {
+                    ConditionContract: conditionContract
+                };
+
+                const promise = that.base.getView().getController().extensionAPI.securedExecution(function() {
+                    return that.base.getView().getController().extensionAPI.invokeActions(
+                        "LO_SETMAN_CCSUPL_MAN.LO_SETMAN_CCSUPL_MAN_Entities/CndnContrButtons", [], payload
+                    );
+                });
+
+                promise.then(function(result) {
+                    if (result.length > 0) {
+                        that._updateAllButtons(result[0].response.data);
+                    }
+                });
+            },
+
 
             onRequestApproval: function (oEvent) {
-                console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: Request Approval"); 
                 this._performRequest("CndnContrRequestApproval","Approval Requested");
             },
 
             onRequestSettlementApproval: function (oEvent) {
-                console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: Request Settlement Approval"); 
                 this._performRequest("CndnContrRequestSettAppr","Settlement Approval Requested");
             },
 
@@ -74,7 +134,6 @@ sap.ui.define(
                         if (result.length > 0 && result[0].response.data.Success) {
                             sap.m.MessageToast.show(sMessage + "\n Contract Number: " + payload.ConditionContract);
                             setTimeout(() => {
-                                //that.base.getView().getController().extensionAPI.rebindTable();
                                 that.base.getView().getController().extensionAPI.refresh();
                             }, 200);
                         }
@@ -83,64 +142,6 @@ sap.ui.define(
 
             },
 
-            _clearButtons: function() {
-                this._buttons = [];
-            },
-
-            _getButtons: function() {
-                if (this._buttons.length <= 0) {
-                    const baseId = this.getView().getId();
-                    const buttonRequestApproval = this.getView().byId(baseId 
-                        + '--customer.zespri.ci.settleman.cc.managesupls1.variant.btnZZRequestApproval');
-                    const buttonRequestSettlementApproval = this.getView().byId(baseId 
-                        + '--customer.zespri.ci.settleman.cc.managesupls1.variant.btnZZRequestSettlementApproval');
-                    this._buttons.push(buttonRequestApproval);
-                    this._buttons.push(buttonRequestSettlementApproval);
-                }
-                return this._buttons;
-            },
-
-            _setButtonsEnabled: function(bEnable) {
-                for (const button of this._getButtons()) {
-                    button.setEnabled(bEnable);
-                }
-            },
-
-            _setReleaseButtonEnabled: function(bEnable) {
-                this.getView().byId("BtnActivate").setEnabled(bEnable);
-            },
-
-            _updateButtons: function(oEvent) {
-                this._setButtonsEnabled(false);
-                this._setReleaseButtonEnabled(false);
-
-                const selectedContexts = oEvent.getSource().getSelectedContexts();
-                this._setButtonsEnabled((selectedContexts.length > 0));
-
-                if (selectedContexts.length > 0) {
-                    this._getAuthorisedToRelease(selectedContexts[0]);
-                }
-            },
-
-            _getAuthorisedToRelease: function(selectedContext) {
-                const that = this;
-                console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: Get Authorised to Release"); 
-
-                const conditionContract = selectedContext.getProperty("ConditionContract");
-                const payload = {
-                    ConditionContract: conditionContract
-                };
-
-                const promise = that.base.getView().getController().extensionAPI.securedExecution(function() {
-                    return that.base.getView().getController().extensionAPI.invokeActions(
-                        "LO_SETMAN_CCSUPL_MAN.LO_SETMAN_CCSUPL_MAN_Entities/CndnContrAuthChckRelease", [], payload
-                    );
-                });
-
-                promise.then(function(result) {
-                    that._setReleaseButtonEnabled(result.length > 0 && result[0].response.data.Success);
-                });
-            },
 
             override: {
             // 	/**
@@ -151,19 +152,19 @@ sap.ui.define(
              	onInit: function() {
                     console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: override: onInit()");
                     
-                    this._clearButtons();
+                    this._disableAllButtons();
 
                     this.getView().byId(this.base.getView().sId + '--responsiveTable').attachSelectionChange(
                         function(oEvent){
                             console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: Selection Change");
-                            this._updateButtons(oEvent);
+                            this._selectionChangeEvent(oEvent);
                         }.bind(this)
                     );
 
                     this.getView().byId(this.base.getView().sId + '--responsiveTable').attachUpdateFinished(
                         function(oEvent){
                             console.log("customer.zespri.ci.settleman.cc.managesupls1.variant.zzController: Update Finished");
-                            this._updateButtons(oEvent);
+                            this._selectionChangeEvent(oEvent);
                         }.bind(this)   
                     );                         
              	}
